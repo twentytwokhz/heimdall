@@ -6,8 +6,8 @@
 
 ---
 
-Azure API Management has **no local emulator**. Every policy change means a live cloud instance
-(30-40 minutes to provision, $50-$2,800/month per tier), a deploy, and a guess. The self-hosted
+Azure API Management has **no official local emulator**. Every policy change means a live cloud
+instance (tens of minutes to provision, on a paid tier), a deploy, and a guess. The self-hosted
 gateway isn't a local option either - it's data-plane only and needs the cloud instance to run.
 
 **Heimdall runs APIM locally.** `docker run`, point it at your policy XML and OpenAPI spec, and the
@@ -18,8 +18,8 @@ It is **not a mock.** Real C# policy expressions evaluated with **Roslyn**. Real
 backends. For the supported policy set, the gateway behaves like production APIM - same `401`/`429`
 shapes, same header/body transforms.
 
-The part most tools miss: a **console that traces every request** through inbound → backend →
-outbound, live - the thing Azure's own portal makes painful and tier-gates.
+And a **console that traces every request** through inbound → backend →
+outbound, live - what Azure's own portal makes painful.
 
 ![Heimdall console - live request tracing across the Frontend, Inbound, Backend, and Outbound stages](assets/console-live-trace.png)
 
