@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Heimdall.Domain/Heimdall.Domain.csproj" />
+    <Project Path="src/Heimdall.Application/Heimdall.Application.csproj" />
+    <Project Path="src/Heimdall.Infrastructure/Heimdall.Infrastructure.csproj" />
+    <Project Path="src/Heimdall.Infrastructure.XmlOpenApiLoader/Heimdall.Infrastructure.XmlOpenApiLoader.csproj" />
+    <Project Path="src/Heimdall.Infrastructure.ApiOpsLoader/Heimdall.Infrastructure.ApiOpsLoader.csproj" />
+    <Project Path="src/Heimdall.Api/Heimdall.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Heimdall.Tests/Heimdall.Tests.csproj" />
+  </Folder>
+</Solution>

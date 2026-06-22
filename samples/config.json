@@ -1,0 +1,38 @@
+{
+  "apis": [
+    {
+      "id": "acme",
+      "displayName": "Acme Platform API",
+      "path": "",
+      "openApiFile": "openapi/acme.yaml",
+      "productIds": ["acme-standard"],
+      "subscriptionRequired": true
+    }
+  ],
+  "backends": [
+    { "id": "acme-backend", "url": "http://localhost:8081" }
+  ],
+  "products": [
+    {
+      "id": "acme-standard",
+      "displayName": "Acme Standard",
+      "requiresSubscription": true,
+      "apiIds": ["acme"]
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": "acme-standard-sub",
+      "displayName": "Acme Standard Subscription",
+      "primaryKey": "acme-standard-primary-key",
+      "secondaryKey": "acme-standard-secondary-key",
+      "scope": "Product",
+      "productId": "acme-standard",
+      "apiId": null,
+      "state": "Active"
+    }
+  ],
+  "namedValues": [
+    { "name": "backend-host", "value": "localhost:8081", "secret": false }
+  ]
+}

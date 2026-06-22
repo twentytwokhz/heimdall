@@ -1,0 +1,23 @@
+<policies>
+  <inbound>
+    <base />
+    <cache-lookup />
+    <return-response>
+      <set-status code="200" />
+      <set-header name="Content-Type" exists-action="override">
+        <value>application/json</value>
+      </set-header>
+      <set-body>{"users":[{"id":"u-1","name":"Ada Lovelace"},{"id":"u-2","name":"Alan Turing"}]}</set-body>
+    </return-response>
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+    <cache-store duration="60" />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>

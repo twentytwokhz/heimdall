@@ -1,0 +1,14 @@
+{
+  "subscriptions": [
+    {
+      "id": "acme-standard-sub",
+      "displayName": "Acme Standard Subscription",
+      "primaryKey": "acme-standard-primary-key",
+      "secondaryKey": "acme-standard-secondary-key",
+      "scope": "Product",
+      "productId": "acme-standard",
+      "apiId": null,
+      "state": "Active"
+    }
+  ]
+}

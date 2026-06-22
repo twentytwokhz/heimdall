@@ -1,0 +1,10 @@
+<case name="quota returns 403 once exceeded">
+  <policies>
+    <inbound>
+      <quota calls="1" renewal-period="86400" />
+    </inbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="GET" path="/catalog/items" repeat="2" />
+  <expect status="403" />
+</case>

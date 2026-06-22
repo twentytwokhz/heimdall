@@ -1,0 +1,35 @@
+version: 2
+updates:
+  # .NET packages (central package management: Directory.Packages.props)
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "deps"
+
+  # Console SPA
+  - package-ecosystem: npm
+    directory: "/src/Heimdall.Ui"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "deps"
+
+  # GitHub Actions used by the CI/release workflows
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: "ci"
+
+  # Base images in the Dockerfile
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: "deps"

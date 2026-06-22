@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: Acme Demo Services
+  version: "1.0"
+servers:
+  - url: http://localhost:8081
+paths:
+  /demo/users:
+    get:
+      operationId: listUsers
+      summary: List users (response-cached so a repeat is served from cache)
+      responses:
+        "200":
+          description: OK
+    post:
+      operationId: createUser
+      summary: Create a user (JWT-protected)
+      responses:
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+  /demo/users/{id}:
+    get:
+      operationId: getUser
+      summary: Get a user by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not found
+  /demo/files:
+    post:
+      operationId: uploadFile
+      summary: Upload a file (multipart/body operation)
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "202":
+          description: Accepted
+  /demo/products:
+    get:
+      operationId: searchProducts
+      summary: Product search (rate-limited and quota-capped)
+      parameters:
+        - name: q
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "429":
+          description: Too Many Requests
+  /demo/health:
+    get:
+      operationId: health
+      summary: Health probe (mock-response, no backend needed)
+      responses:
+        "200":
+          description: OK

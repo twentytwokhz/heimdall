@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: Acme Platform API
+  version: "1.0"
+servers:
+  - url: http://localhost:8081
+paths:
+  /catalog/items:
+    get:
+      operationId: listCatalogItems
+      summary: List catalog items
+      responses:
+        "200":
+          description: OK
+    post:
+      operationId: createCatalogItem
+      summary: Create a catalog item
+      responses:
+        "201":
+          description: Created
+  /catalog/items/{id}:
+    get:
+      operationId: getCatalogItem
+      summary: Get a catalog item by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not found

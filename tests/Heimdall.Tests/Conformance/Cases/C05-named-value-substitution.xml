@@ -1,0 +1,15 @@
+<case name="named-value token is substituted before reaching the backend">
+  <named-value name="backend-tag" value="acme-prod" />
+  <policies>
+    <inbound>
+      <set-header name="X-Backend-Tag">
+        <value>{{backend-tag}}</value>
+      </set-header>
+    </inbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="GET" path="/catalog/items" />
+  <expect status="200">
+    <backend-header name="X-Backend-Tag" contains="acme-prod" />
+  </expect>
+</case>

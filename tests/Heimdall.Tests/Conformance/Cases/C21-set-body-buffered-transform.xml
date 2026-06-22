@@ -1,0 +1,12 @@
+<case name="set-body reads and transforms the request body before forwarding (buffered)">
+  <policies>
+    <inbound>
+      <set-body>@(context.Request.Body.As&lt;string&gt;().ToUpperInvariant())</set-body>
+    </inbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="POST" path="/catalog/items" body="echo-me" />
+  <expect status="200">
+    <backend-body-contains>ECHO-ME</backend-body-contains>
+  </expect>
+</case>

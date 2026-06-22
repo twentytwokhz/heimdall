@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="WireMock.Net" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="Shouldly" />
+    <PackageReference Include="NetArchTest.Rules" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" />
+    <PackageReference Include="Microsoft.Playwright" />
+    <PackageReference Include="coverlet.collector" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Heimdall.Domain/Heimdall.Domain.csproj" />
+    <ProjectReference Include="../../src/Heimdall.Application/Heimdall.Application.csproj" />
+    <ProjectReference Include="../../src/Heimdall.Infrastructure/Heimdall.Infrastructure.csproj" />
+    <ProjectReference Include="../../src/Heimdall.Infrastructure.XmlOpenApiLoader/Heimdall.Infrastructure.XmlOpenApiLoader.csproj" />
+    <ProjectReference Include="../../src/Heimdall.Infrastructure.ApiOpsLoader/Heimdall.Infrastructure.ApiOpsLoader.csproj" />
+    <ProjectReference Include="../../src/Heimdall.Api/Heimdall.Api.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "displayName": "backend-host",
+    "value": "localhost:8081",
+    "secret": false
+  }
+}

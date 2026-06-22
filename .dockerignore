@@ -1,0 +1,18 @@
+# Build outputs and deps - regenerated inside the image, never copied from the host.
+**/bin
+**/obj
+**/node_modules
+**/dist
+src/Heimdall.Api/wwwroot/console
+
+# VCS / editor / working state
+.git
+.gitignore
+.handoff
+.vs
+.vscode
+.idea
+
+# Docs and design assets are not needed in the build context
+design
+docs

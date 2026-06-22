@@ -1,0 +1,15 @@
+<case name="validate-jwt with require-scheme rejects a token carrying the wrong scheme">
+  <policies>
+    <inbound>
+      <validate-jwt failed-validation-httpcode="401" require-scheme="Bearer">
+        <issuer-signing-keys>
+          <key>aGVpbWRhbGwtdGVzdC1zaWduaW5nLXNlY3JldC1vZi0zMitieXRlcyEh</key>
+        </issuer-signing-keys>
+      </validate-jwt>
+    </inbound>
+  </policies>
+  <request method="GET" path="/catalog/items">
+    <header name="Authorization" value="some-bare-token-without-a-scheme" />
+  </request>
+  <expect status="401" />
+</case>
