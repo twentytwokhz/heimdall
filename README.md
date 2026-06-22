@@ -2,7 +2,7 @@
 
 **A local, offline emulator of the Azure API Management (APIM) data plane - with a live policy-trace console.**
 
-![license](https://img.shields.io/badge/license-MIT-blue) ![dotnet](https://img.shields.io/badge/.NET-10-512BD4) ![status](https://img.shields.io/badge/status-pre--release-orange)
+[![CI](https://github.com/twentytwokhz/heimdall/actions/workflows/ci.yml/badge.svg)](https://github.com/twentytwokhz/heimdall/actions/workflows/ci.yml) ![release](https://img.shields.io/badge/release-v0.1.0-blue) ![license](https://img.shields.io/badge/license-MIT-blue) ![dotnet](https://img.shields.io/badge/.NET-10-512BD4)
 
 ---
 
@@ -20,6 +20,8 @@ shapes, same header/body transforms.
 
 The part most tools miss: a **console that traces every request** through inbound → backend →
 outbound, live - the thing Azure's own portal makes painful and tier-gates.
+
+![Heimdall console - live request tracing across the Frontend, Inbound, Backend, and Outbound stages](assets/console-live-trace.png)
 
 ---
 
