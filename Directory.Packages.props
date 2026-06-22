@@ -13,7 +13,7 @@
     <PackageVersion Include="Microsoft.OpenApi" Version="3.7.0" />
     <PackageVersion Include="Microsoft.OpenApi.YamlReader" Version="3.7.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageVersion Include="Serilog.AspNetCore" Version="10.0.0" />
     <PackageVersion Include="Serilog.Sinks.Seq" Version="9.0.0" />
     <!-- Forwarding (declared now; wired in Phase 1) -->
     <PackageVersion Include="WireMock.Net" Version="2.11.0" />
