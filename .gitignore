@@ -1,0 +1,39 @@
+# .NET build output
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+.vs/
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# Test results
+[Tt]est[Rr]esults/
+*.trx
+coverage/
+*.coverage
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config / secrets (not the sample config)
+*.local.json
+appsettings.*.local.json
+
+# Node / embedded console SPA
+node_modules/
+# Console build output (produced by `npm run build` in src/Heimdall.Ui, or the Docker node stage)
+src/Heimdall.Api/wwwroot/console/
+
+# Session handoff notes (working state, not for the public repo)
+.handoff/

@@ -1,0 +1,21 @@
+{
+  "info": {
+    "name": "Acme Platform API - Scripted",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "List with test script",
+      "event": [
+        {
+          "listen": "test",
+          "script": { "exec": ["pm.test('status is 200', () => pm.response.to.have.status(200));"] }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": { "raw": "https://acme.example.azure-api.net/catalog/items" }
+      }
+    }
+  ]
+}

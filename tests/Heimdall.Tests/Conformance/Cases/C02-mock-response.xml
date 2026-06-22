@@ -1,0 +1,9 @@
+<case name="mock-response short-circuits with the configured status">
+  <policies>
+    <inbound>
+      <mock-response status-code="503" />
+    </inbound>
+  </policies>
+  <request method="GET" path="/catalog/items" />
+  <expect status="503" />
+</case>

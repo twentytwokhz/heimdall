@@ -1,0 +1,13 @@
+<case name="validate-jwt rejects a request with no token">
+  <policies>
+    <inbound>
+      <validate-jwt failed-validation-httpcode="401">
+        <issuer-signing-keys>
+          <key>aGVpbWRhbGwtdGVzdC1zaWduaW5nLXNlY3JldC1vZi0zMitieXRlcyEh</key>
+        </issuer-signing-keys>
+      </validate-jwt>
+    </inbound>
+  </policies>
+  <request method="GET" path="/catalog/items" />
+  <expect status="401" />
+</case>
