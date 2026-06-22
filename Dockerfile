@@ -1,5 +1,5 @@
 # Stage 1: build the embedded console SPA (src/Heimdall.Ui) into a self-contained dist.
-FROM node:22-alpine AS ui-build
+FROM node:26-alpine AS ui-build
 WORKDIR /ui
 COPY src/Heimdall.Ui/package.json src/Heimdall.Ui/package-lock.json ./
 RUN npm ci
