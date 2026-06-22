@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="heimdall-mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#B9A8FF"/>
+      <stop offset="55%" stop-color="#7C5CFF"/>
+      <stop offset="100%" stop-color="#512BD4"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#07080B"/>
+  <path d="M32 9 L50 16 V32 C50 44 42 52 32 56 C22 52 14 44 14 32 V16 Z"
+        fill="none" stroke="url(#heimdall-mark)" stroke-width="3.5" stroke-linejoin="round"/>
+  <circle cx="32" cy="31" r="6.5" fill="none" stroke="#E8EAF0" stroke-width="3"/>
+  <circle cx="32" cy="31" r="1.8" fill="#E8EAF0"/>
+</svg>

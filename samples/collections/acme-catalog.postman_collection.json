@@ -1,0 +1,43 @@
+{
+  "info": {
+    "name": "Acme Platform API - Catalog",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://acme.example.azure-api.net" },
+    { "key": "subscriptionKey", "value": "acme-standard-primary-key" }
+  ],
+  "item": [
+    {
+      "name": "Catalog",
+      "item": [
+        {
+          "name": "List catalog items",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Ocp-Apim-Subscription-Key", "value": "{{subscriptionKey}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/catalog/items" }
+          }
+        },
+        {
+          "name": "Create catalog item",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Ocp-Apim-Subscription-Key", "value": "{{subscriptionKey}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sku\": \"ACME-100\",\n  \"name\": \"Sprocket\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseUrl}}/catalog/items" }
+          }
+        }
+      ]
+    }
+  ]
+}

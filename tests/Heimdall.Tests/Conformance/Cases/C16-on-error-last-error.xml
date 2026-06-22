@@ -1,0 +1,15 @@
+<case name="a policy error routes to on-error with context.LastError populated">
+  <policies>
+    <inbound>
+      <rate-limit-by-key calls="1" renewal-period="60" />
+    </inbound>
+    <on-error>
+      <set-status code="503" />
+      <set-body>@(context.LastError.Reason)</set-body>
+    </on-error>
+  </policies>
+  <request method="GET" path="/catalog/items" />
+  <expect status="503">
+    <body-contains>MissingAttribute</body-contains>
+  </expect>
+</case>

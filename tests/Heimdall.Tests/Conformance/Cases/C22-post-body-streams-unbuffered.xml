@@ -1,0 +1,14 @@
+<case name="POST body streams to the backend when no policy reads it (unbuffered)">
+  <policies>
+    <inbound>
+      <set-header name="X-Marker">
+        <value>m</value>
+      </set-header>
+    </inbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="POST" path="/catalog/items" body="streamed-payload" />
+  <expect status="200">
+    <backend-body-contains>streamed-payload</backend-body-contains>
+  </expect>
+</case>

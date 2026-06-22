@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="../Heimdall.Infrastructure/Heimdall.Infrastructure.csproj" />
+    <ProjectReference Include="../Heimdall.Infrastructure.XmlOpenApiLoader/Heimdall.Infrastructure.XmlOpenApiLoader.csproj" />
+    <ProjectReference Include="../Heimdall.Infrastructure.ApiOpsLoader/Heimdall.Infrastructure.ApiOpsLoader.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Serilog.Sinks.Seq" />
+    <PackageReference Include="Yarp.ReverseProxy" />
+  </ItemGroup>
+</Project>

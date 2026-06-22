@@ -1,0 +1,10 @@
+<case name="outbound set-status overrides the backend status">
+  <policies>
+    <outbound>
+      <set-status code="201" />
+    </outbound>
+  </policies>
+  <backend status="200" body="from-backend" />
+  <request method="GET" path="/catalog/items" />
+  <expect status="201" />
+</case>

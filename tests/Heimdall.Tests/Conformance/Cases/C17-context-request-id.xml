@@ -1,0 +1,14 @@
+<case name="context.RequestId is available to expressions and reaches the backend">
+  <policies>
+    <inbound>
+      <set-header name="X-Heimdall-Request">
+        <value>@(context.RequestId.ToString())</value>
+      </set-header>
+    </inbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="GET" path="/catalog/items" />
+  <expect status="200">
+    <backend-header name="X-Heimdall-Request" />
+  </expect>
+</case>

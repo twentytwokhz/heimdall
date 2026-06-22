@@ -1,0 +1,285 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* The console is dark-only: it mirrors the approved mockup (design/heimdall-console.html), whose
+   palette lives here as CSS variables mapped onto shadcn's variable contract. Tailwind v4 turns the
+   --color-* / --font-* / --radius tokens in @theme into utilities (bg-background, text-foreground...). */
+
+:root {
+  color-scheme: dark;
+
+  /* Heimdall palette (verbatim from the mockup) */
+  --bg: #06080f;
+  --bg2: #090d18;
+  --panel: #0e1322;
+  --panel2: #131a2c;
+  --text: #eaeef8;
+  --muted: #9aa3bb;
+  --faint: #7b859e;
+  --line: rgba(170, 190, 255, 0.08);
+  --line2: rgba(170, 190, 255, 0.16);
+  --blue: #4c9bff;
+  --cyan: #46e0d2;
+  --green: #56e39a;
+  --amber: #ffc24b;
+  --rose: #ff6b8b;
+  --indigo: #8b7bff;
+  --spectrum: linear-gradient(90deg, #9a8bff 0%, #7c6cff 50%, #5b6cf0 100%);
+
+  /* shadcn semantic tokens -> Heimdall palette */
+  --radius: 14px;
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--panel);
+  --card-foreground: var(--text);
+  --popover: var(--panel);
+  --popover-foreground: var(--text);
+  --primary: #7c6cff;
+  --primary-foreground: #0a0d16;
+  --secondary: var(--panel2);
+  --secondary-foreground: var(--text);
+  --muted-color: var(--panel2);
+  --muted-foreground: var(--muted);
+  --accent: var(--panel2);
+  --accent-foreground: var(--text);
+  --destructive: var(--rose);
+  --destructive-foreground: #0a0d16;
+  --border: var(--line);
+  --input: var(--line2);
+  --ring: #7c6cff;
+
+  /* sidebar tokens (consumed by the shadcn sidebar component) */
+  --sidebar: var(--bg2);
+  --sidebar-foreground: var(--muted);
+  --sidebar-primary: #7c6cff;
+  --sidebar-primary-foreground: #0a0d16;
+  --sidebar-accent: var(--panel2);
+  --sidebar-accent-foreground: var(--text);
+  --sidebar-border: var(--line);
+  --sidebar-ring: #7c6cff;
+
+  /* typography (self-hosted via @fontsource, imported in main.tsx) */
+  --font-sans: "Geist Variable", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted-color);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* accent hues exposed as utilities (text-blue, bg-cyan, ...) for the data surfaces */
+  --color-blue: var(--blue);
+  --color-cyan: var(--cyan);
+  --color-green: var(--green);
+  --color-amber: var(--amber);
+  --color-rose: var(--rose);
+  --color-indigo: var(--indigo);
+  --color-faint: var(--faint);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* --- Signature elements (bespoke CSS, not expressible as shadcn primitives) --- */
+
+/* The all-seeing scan: a glow that sweeps along a faint spectrum rail (Heimdall's watch). */
+.spectrum-rule {
+  position: relative;
+  height: 2px;
+  border-radius: 2px;
+  overflow: visible;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 123, 255, 0.2) 20%,
+    rgba(139, 123, 255, 0.2) 80%,
+    transparent
+  );
+}
+.spectrum-rule::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  width: 38px;
+  height: 3px;
+  transform: translate(-50%, -50%);
+  border-radius: 3px;
+  background: radial-gradient(closest-side, #bcaaff, rgba(139, 123, 255, 0.55) 50%, transparent);
+  box-shadow: 0 0 11px 2px rgba(139, 123, 255, 0.7);
+  animation: kitt 3.6s ease-in-out infinite alternate;
+}
+@keyframes kitt {
+  from {
+    left: 10%;
+  }
+  to {
+    left: 90%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spectrum-rule::before {
+    animation: none;
+  }
+}
+
+/* Brand wordmark: silver gradient text. */
+.wordmark {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  padding-left: 0.42em;
+  background: linear-gradient(180deg, #fff, #b9c4e6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft accent glow, reused by lit/active surfaces. */
+.glow {
+  box-shadow: 0 0 0 1px rgba(70, 224, 210, 0.25), 0 16px 40px -22px rgba(70, 224, 210, 0.6);
+}
+
+/* Live status dot: a green core that breathes a radar ping, so "watching"/healthy reads as live. */
+.pulse-dot {
+  position: relative;
+}
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  animation: pulse-ring 2s ease-out infinite;
+}
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(86, 227, 154, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(86, 227, 154, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(86, 227, 154, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot::after {
+    animation: none;
+  }
+}
+
+/* Active nav row: the signature spectrum bar down the left edge (mirrors the mockup's .navitem.active). */
+.nav-rail [data-active="true"] {
+  position: relative;
+}
+.nav-rail [data-active="true"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--spectrum);
+}
+
+/* Policy chips for the pipeline canvas (defined now, consumed by a later surface). The dot colour
+   encodes the policy family: flow=cyan, transform=blue, auth=indigo, rate=amber, base=faint. */
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: rgba(8, 11, 20, 0.5);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: #cdd5ea;
+  transition: 0.18s;
+}
+.chip:hover {
+  border-color: var(--line2);
+  background: rgba(170, 190, 255, 0.06);
+}
+.chip .ic {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--blue);
+  flex: none;
+  box-shadow: 0 0 8px var(--blue);
+}
+.chip .ms {
+  margin-left: auto;
+  font-size: 10.5px;
+  color: var(--faint);
+}
+.chip.base {
+  color: var(--faint);
+  font-style: italic;
+}
+.chip.base .ic {
+  background: var(--faint);
+  box-shadow: none;
+}
+.chip.k-flow .ic {
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+}
+.chip.k-xform .ic {
+  background: var(--blue);
+}
+.chip.k-auth .ic {
+  background: var(--indigo);
+  box-shadow: 0 0 8px var(--indigo);
+}
+.chip.k-rate .ic {
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber);
+}

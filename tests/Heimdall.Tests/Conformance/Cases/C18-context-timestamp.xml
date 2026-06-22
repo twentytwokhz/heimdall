@@ -1,0 +1,14 @@
+<case name="context.Timestamp is available to expressions and reaches the backend">
+  <policies>
+    <inbound>
+      <set-header name="X-Year">
+        <value>@(context.Timestamp.Year.ToString())</value>
+      </set-header>
+    </inbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="GET" path="/catalog/items" />
+  <expect status="200">
+    <backend-header name="X-Year" contains="20" />
+  </expect>
+</case>

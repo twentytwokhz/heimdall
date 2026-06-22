@@ -1,0 +1,29 @@
+<policies>
+  <inbound>
+    <base />
+    <set-header name="X-Acme-Demo-Api" exists-action="override">
+      <value>acme-demo</value>
+    </set-header>
+    <choose>
+      <when condition="@(context.Request.Headers.ContainsKey(&quot;X-Tier&quot;))">
+        <set-header name="X-Acme-Demo-Tier" exists-action="override">
+          <value>premium</value>
+        </set-header>
+      </when>
+      <otherwise>
+        <set-header name="X-Acme-Demo-Tier" exists-action="override">
+          <value>standard</value>
+        </set-header>
+      </otherwise>
+    </choose>
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>

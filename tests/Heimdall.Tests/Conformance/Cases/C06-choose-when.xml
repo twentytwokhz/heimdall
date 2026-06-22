@@ -1,0 +1,25 @@
+<case name="choose/when branch is selected when the condition holds">
+  <policies>
+    <inbound>
+      <choose>
+        <when condition="@(context.Request.Headers.ContainsKey(&quot;X-Tier&quot;))">
+          <set-header name="X-Route">
+            <value>premium</value>
+          </set-header>
+        </when>
+        <otherwise>
+          <set-header name="X-Route">
+            <value>standard</value>
+          </set-header>
+        </otherwise>
+      </choose>
+    </inbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="GET" path="/catalog/items">
+    <header name="X-Tier" value="gold" />
+  </request>
+  <expect status="200">
+    <backend-header name="X-Route" contains="premium" />
+  </expect>
+</case>

@@ -1,0 +1,23 @@
+<policies>
+  <inbound>
+    <base />
+    <rate-limit calls="3" renewal-period="60" />
+    <quota calls="100" renewal-period="3600" />
+    <return-response>
+      <set-status code="200" />
+      <set-header name="Content-Type" exists-action="override">
+        <value>application/json</value>
+      </set-header>
+      <set-body>{"products":[{"id":"p-1","name":"Widget"},{"id":"p-2","name":"Gadget"}]}</set-body>
+    </return-response>
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>

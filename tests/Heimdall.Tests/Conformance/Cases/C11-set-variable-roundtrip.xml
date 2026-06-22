@@ -1,0 +1,15 @@
+<case name="set-variable value is readable by a later expression and reaches the backend">
+  <policies>
+    <inbound>
+      <set-variable name="tier" value="gold" />
+      <set-header name="X-Tier">
+        <value>@(context.Variables["tier"])</value>
+      </set-header>
+    </inbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="GET" path="/catalog/items" />
+  <expect status="200">
+    <backend-header name="X-Tier" contains="gold" />
+  </expect>
+</case>

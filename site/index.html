@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Heimdall - local, offline Azure API Management emulator</title>
+  <meta name="description" content="A local, offline emulator of the Azure API Management (APIM) data plane, with a live policy-trace console. Real Roslyn-evaluated C# policies, fully offline, ships as a single Docker image.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Heimdall - local Azure API Management emulator">
+  <meta property="og:description" content="Run APIM locally. Real Roslyn-evaluated policies, a live trace console, fully offline. Edit-to-test in under 2 seconds.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://raw.githubusercontent.com/twentytwokhz/heimdall/main/assets/console-live-trace.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="topline" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="beams" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="nav">
+    <a class="brand" href="#top" aria-label="Heimdall home">
+      <svg class="brand-mark" viewBox="0 0 64 64" width="38" height="38" aria-hidden="true">
+        <path d="M32 9 L50 16 V32 C50 44 42 52 32 56 C22 52 14 44 14 32 V16 Z" fill="none" stroke="url(#g)" stroke-width="3.5" stroke-linejoin="round"/>
+        <circle cx="32" cy="31" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/>
+        <circle cx="32" cy="31" r="1.8" fill="currentColor"/>
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#B9A8FF"/><stop offset="55%" stop-color="#7C5CFF"/>
+          <stop offset="100%" stop-color="#512BD4"/></linearGradient></defs>
+      </svg>
+      <span>Heimdall</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#quickstart">Quickstart</a>
+      <a href="https://hub.docker.com/r/florinbobis/heimdall">Docker Hub</a>
+      <a class="nav-cta" href="https://github.com/twentytwokhz/heimdall">GitHub</a>
+    </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span class="dot"></span> Open source · MIT · .NET 10</p>
+        <h1>Run Azure API Management <span class="accent-text">on your laptop.</span></h1>
+        <p class="lede">A local, offline emulator of the APIM <strong>data plane</strong>, with a live policy-trace console. Real C# policy expressions, evaluated with Roslyn. Not a mock.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#quickstart">Run it locally</a>
+          <a class="btn btn-ghost" href="https://github.com/twentytwokhz/heimdall">View on GitHub →</a>
+        </div>
+        <p class="hero-note">Edit-to-test in <strong>under 2 seconds</strong>. No Azure account. No cloud calls.</p>
+      </div>
+      <figure class="hero-shot reveal">
+        <img src="assets/console-live-trace.png" alt="Heimdall live trace console: requests streaming across the Frontend, Inbound, Backend, and Outbound stages with a live metrics strip" loading="eager" width="1280" height="800">
+      </figure>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="problem reveal band">
+      <div class="problem-inner">
+        <h2 class="kicker">The problem</h2>
+        <p>Azure API Management has <strong>no official local emulator</strong>. Every policy change means a live cloud instance (minutes to provision, on a paid tier), a deploy, and a guess. The self-hosted gateway is not a local option either: it is data-plane only and still needs the cloud instance to run.</p>
+        <p class="problem-punch">Heimdall closes that loop on your machine.</p>
+      </div>
+    </section>
+
+    <!-- PIPELINE CANVAS (from the console) -->
+    <section class="pipeline reveal">
+      <h2 class="kicker center">The four-stage pipeline</h2>
+      <p class="pl-sub">The canvas the console renders: global → product → API → operation, flattened.</p>
+      <div class="canvas">
+        <div class="pl-row">
+          <div class="pl-stage lit">
+            <div class="pl-card">
+              <div class="pl-name"><span class="pl-idx">1</span> Frontend</div>
+              <p class="pl-desc">The request as received from the client.</p>
+              <div class="pl-chip flow"><span class="d"></span> GET /catalog/items <span class="ms">in</span></div>
+              <div class="pl-chip"><span class="d"></span> Ocp-Apim-Subscription-Key</div>
+            </div>
+            <span class="pl-conn" aria-hidden="true"></span>
+          </div>
+          <div class="pl-stage lit">
+            <div class="pl-card">
+              <div class="pl-name"><span class="pl-idx">2</span> Inbound</div>
+              <p class="pl-desc">Modify the request before it reaches the backend.</p>
+              <div class="pl-chip base"><span class="d"></span> base</div>
+              <div class="pl-chip flow"><span class="d"></span> choose</div>
+              <div class="pl-nest">
+                <div class="pl-chip flow"><span class="d"></span> when <span class="ms">region=eu</span></div>
+                <div class="pl-chip xform"><span class="d"></span> set-header <span class="ms">@()</span></div>
+              </div>
+              <div class="pl-chip auth"><span class="d"></span> validate-jwt</div>
+              <div class="pl-chip rate"><span class="d"></span> rate-limit <span class="ms">10/60s</span></div>
+            </div>
+            <span class="pl-conn" aria-hidden="true"></span>
+          </div>
+          <div class="pl-stage lit">
+            <div class="pl-card">
+              <div class="pl-name"><span class="pl-idx">3</span> Backend</div>
+              <p class="pl-desc">Forward to the configured HTTP(s) endpoint.</p>
+              <div class="pl-chip base"><span class="d"></span> base</div>
+              <div class="pl-chip xform"><span class="d"></span> set-backend-service</div>
+              <div class="pl-chip flow"><span class="d"></span> forward-request</div>
+            </div>
+            <span class="pl-conn" aria-hidden="true"></span>
+          </div>
+          <div class="pl-stage lit">
+            <div class="pl-card">
+              <div class="pl-name"><span class="pl-idx">4</span> Outbound</div>
+              <p class="pl-desc">Modify the response before it returns to the client.</p>
+              <div class="pl-chip base"><span class="d"></span> base</div>
+              <div class="pl-chip xform"><span class="d"></span> set-header <span class="ms">X-Trace-Id</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="pl-onerror">
+          <span class="pl-name err">on-error</span>
+          <div class="pl-chip base"><span class="d"></span> base</div>
+          <div class="pl-chip xform"><span class="d"></span> set-body <span class="ms">@(context.LastError…)</span></div>
+          <span class="pl-note">runs only when a policy faults</span>
+        </div>
+      </div>
+      <p class="bridge-caption">Watch which policies fire, branch decisions, before/after transforms, evaluated <code>@()</code> results, the resolved backend, the final status.</p>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="features">
+      <h2 class="kicker center">What you get</h2>
+      <div class="grid">
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+          <h3>A real policy engine, not a mock</h3>
+          <p>C# <code>@()</code> expressions compiled and cached with Roslyn. ~25 tier-1 policies, <code>&lt;base/&gt;</code> flattening across global → product → API → operation. Same <code>401</code>/<code>429</code> shapes as production.</p>
+        </article>
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          <h3>A live trace console</h3>
+          <p>Every request streams across Frontend → Inbound → Backend → Outbound in real time, with per-policy timings, branch decisions, before/after transforms, and a live metrics strip.</p>
+        </article>
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4Z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg>
+          <h3>Config explorer</h3>
+          <p>Browse APIs, operations, products, subscriptions, named values, and backends, with the flattened effective policy per operation. Secrets masked.</p>
+        </article>
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 9-14 9V3Z"/></svg>
+          <h3>Request playground</h3>
+          <p>Import a Postman or <code>.http</code> collection, edit method, URL, headers and body, replay through the live gateway, and jump straight to the correlated trace.</p>
+        </article>
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M3 20l4-1 11-11a2.1 2.1 0 0 0-3-3L4 16l-1 4Z"/></svg>
+          <h3>In-browser policy authoring</h3>
+          <p>Edit policy XML and hot-reload it into the running gateway in memory. No restart, no redeploy.</p>
+        </article>
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="M3.3 7L12 12l8.7-5M12 22V12"/></svg>
+          <h3>Loaders for what you already have</h3>
+          <p>Raw policy XML + OpenAPI, or an <strong>APIOps v6</strong> extractor folder, the same output your APIM CI/CD produces. New formats plug in as adapters.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- NOT A MOCK / POLICIES -->
+    <section class="policies reveal band">
+      <h2 class="kicker center">Tier-1 policies, behaviorally faithful</h2>
+      <p class="policies-sub">Unsupported policies <strong>fail loudly</strong> with a clear error. Never silently skipped.</p>
+      <ul class="chips">
+        <li>choose/when</li><li>set-variable</li><li>include-fragment</li><li>set-header</li>
+        <li>set-body</li><li>set-method</li><li>rewrite-uri</li><li>set-query-parameter</li>
+        <li>set-backend-service</li><li>find-and-replace</li><li>validate-jwt</li><li>check-header</li>
+        <li>ip-filter</li><li>cors</li><li>rate-limit</li><li>rate-limit-by-key</li>
+        <li>quota</li><li>quota-by-key</li><li>forward-request</li><li>return-response</li>
+        <li>mock-response</li><li>set-status</li><li>cache-lookup</li><li>cache-store</li>
+        <li>subscription-key</li><li>named-values {{ }}</li>
+      </ul>
+    </section>
+
+    <!-- QUICKSTART -->
+    <section id="quickstart" class="quickstart reveal">
+      <h2 class="kicker center">Quickstart</h2>
+      <p class="qs-sub"><code>docker run</code>, point it at your config, open the console.</p>
+      <div class="code">
+        <button class="copy" data-copy="run">Copy</button>
+        <pre id="run"><span class="cm"># Run the gateway against a config directory (policy XML + OpenAPI + config.json)</span>
+docker run -p 8080:8080 -v "$(pwd)/samples:/config" florinbobis/heimdall --config /config
+
+<span class="cm"># Send a request through it - policies applied, forwarded to your backend</span>
+curl -H "Ocp-Apim-Subscription-Key: &lt;key&gt;" http://localhost:8080/catalog/items
+
+<span class="cm"># Open the console: live trace, config explorer, request playground</span>
+<span class="cm">#   http://localhost:8080/_apim/</span></pre>
+      </div>
+      <p class="qs-foot">Or bring up the gateway + a sample backend together with <code>docker compose up</code>.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg viewBox="0 0 64 64" width="24" height="24" aria-hidden="true">
+          <path d="M32 9 L50 16 V32 C50 44 42 52 32 56 C22 52 14 44 14 32 V16 Z" fill="none" stroke="url(#g2)" stroke-width="3.5" stroke-linejoin="round"/>
+          <circle cx="32" cy="31" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/>
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#B9A8FF"/><stop offset="100%" stop-color="#512BD4"/></linearGradient></defs>
+        </svg>
+        <span>Heimdall</span>
+      </div>
+      <nav class="footer-links">
+        <a href="https://github.com/twentytwokhz/heimdall">GitHub</a>
+        <a href="https://hub.docker.com/r/florinbobis/heimdall">Docker Hub</a>
+        <a href="https://github.com/twentytwokhz/heimdall/blob/main/LICENSE">MIT License</a>
+      </nav>
+      <p class="footer-tech">Built with .NET 10 · YARP · Roslyn.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+@baseUrl = https://acme.example.azure-api.net
+@subscriptionKey = acme-standard-primary-key
+
+### List catalog items (bearer-token protected)
+GET {{baseUrl}}/catalog/items
+Ocp-Apim-Subscription-Key: {{subscriptionKey}}
+Authorization: Bearer {{access_token}}

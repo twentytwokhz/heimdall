@@ -1,0 +1,15 @@
+<case name="validate-jwt rejects a malformed bearer token">
+  <policies>
+    <inbound>
+      <validate-jwt failed-validation-httpcode="401">
+        <issuer-signing-keys>
+          <key>aGVpbWRhbGwtdGVzdC1zaWduaW5nLXNlY3JldC1vZi0zMitieXRlcyEh</key>
+        </issuer-signing-keys>
+      </validate-jwt>
+    </inbound>
+  </policies>
+  <request method="GET" path="/catalog/items">
+    <header name="Authorization" value="Bearer not-a-real-jwt" />
+  </request>
+  <expect status="401" />
+</case>
