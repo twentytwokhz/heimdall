@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "displayName": "Acme Platform API",
+    "path": "",
+    "serviceUrl": "http://localhost:8081",
+    "subscriptionRequired": true
+  }
+}

@@ -1,0 +1,4 @@
+# Default owner for everything in this repo. On pull requests authored by others,
+# @twentytwokhz is auto-requested as reviewer (and required once branch protection's
+# "require review from Code Owners" is enabled at the public flip).
+* @twentytwokhz

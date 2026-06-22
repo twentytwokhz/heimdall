@@ -1,0 +1,16 @@
+<case name="check-header passes a request carrying a matching header">
+  <policies>
+    <inbound>
+      <check-header name="X-Key" failed-check-httpcode="401">
+        <value>secret</value>
+      </check-header>
+    </inbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="GET" path="/catalog/items">
+    <header name="X-Key" value="secret" />
+  </request>
+  <expect status="200">
+    <body-contains>ok</body-contains>
+  </expect>
+</case>

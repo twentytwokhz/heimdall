@@ -1,0 +1,14 @@
+<case name="return-response short-circuits with status and body">
+  <policies>
+    <inbound>
+      <return-response>
+        <set-status code="418" />
+        <set-body>teapot</set-body>
+      </return-response>
+    </inbound>
+  </policies>
+  <request method="GET" path="/catalog/items" />
+  <expect status="418">
+    <body-contains>teapot</body-contains>
+  </expect>
+</case>

@@ -1,0 +1,27 @@
+# APIOps variant: point Heimdall at an APIOps v6 extractor folder instead of the XmlOpenApi sample.
+# Mount your extractor output at /apiops (here the bundled samples/apiops-layout) and supply the secrets
+# APIOps cannot export (subscription keys, secret named values) via heimdall.overrides.json in that folder.
+services:
+  emulator:
+    build: .
+    container_name: heimdall
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      Heimdall__ConfigLoader: ApiOps
+      Heimdall__ConfigPath: /apiops
+      Heimdall__EnableAdminApi: "true"
+      # The backend stub is reachable as the compose service name, not localhost (the gateway itself).
+      Heimdall__BackendOverrides__acme: http://backend:8081
+    volumes:
+      - ./samples/apiops-layout:/apiops:ro
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./samples/backend
+    container_name: heimdall-backend
+    ports:
+      - "8081:8081"

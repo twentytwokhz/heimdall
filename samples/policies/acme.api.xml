@@ -1,0 +1,18 @@
+<policies>
+  <inbound>
+    <base />
+    <set-header name="X-Acme-Api">
+      <value>acme</value>
+    </set-header>
+    <rate-limit calls="5" renewal-period="60" />
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>

@@ -1,0 +1,25 @@
+{
+  "apis": [
+    {
+      "id": "acme-demo",
+      "displayName": "Acme Demo Services",
+      "path": "",
+      "openApiFile": "openapi/acme-demo.yaml",
+      "productIds": ["acme-demo-standard"],
+      "subscriptionRequired": false
+    }
+  ],
+  "products": [
+    {
+      "id": "acme-demo-standard",
+      "displayName": "Acme Demo Standard",
+      "requiresSubscription": false,
+      "apiIds": ["acme-demo"]
+    }
+  ],
+  "subscriptions": [],
+  "namedValues": [
+    { "name": "demo-region", "value": "westus", "secret": false }
+  ],
+  "backends": []
+}

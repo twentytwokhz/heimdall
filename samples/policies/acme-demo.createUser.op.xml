@@ -1,0 +1,26 @@
+<policies>
+  <inbound>
+    <base />
+    <validate-jwt header-name="Authorization" require-scheme="Bearer" failed-validation-httpcode="401" failed-validation-error-message="A valid bearer token is required.">
+      <issuer-signing-keys>
+        <key>aGVpbWRhbGwtdGVzdC1zaWduaW5nLXNlY3JldC1vZi0zMitieXRlcyEh</key>
+      </issuer-signing-keys>
+    </validate-jwt>
+    <return-response>
+      <set-status code="201" />
+      <set-header name="Content-Type" exists-action="override">
+        <value>application/json</value>
+      </set-header>
+      <set-body>{"id":"u-3","status":"created"}</set-body>
+    </return-response>
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>

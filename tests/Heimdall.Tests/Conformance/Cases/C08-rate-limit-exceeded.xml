@@ -1,0 +1,12 @@
+<case name="rate-limit returns 429 with Retry-After once exceeded">
+  <policies>
+    <inbound>
+      <rate-limit calls="1" renewal-period="60" />
+    </inbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="GET" path="/catalog/items" repeat="2" />
+  <expect status="429">
+    <header name="Retry-After" />
+  </expect>
+</case>

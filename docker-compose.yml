@@ -1,0 +1,23 @@
+services:
+  emulator:
+    build: .
+    container_name: heimdall
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      # In the compose network the backend stub is reachable as the service name, not localhost
+      # (which would be the gateway itself). Override the acme API's default forward target accordingly.
+      Heimdall__BackendOverrides__acme: http://backend:8081
+    volumes:
+      # The gateway loads its config from /config (appsettings ConfigPath); mount the bundled samples.
+      - ./samples:/config:ro
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./samples/backend
+    container_name: heimdall-backend
+    ports:
+      - "8081:8081"

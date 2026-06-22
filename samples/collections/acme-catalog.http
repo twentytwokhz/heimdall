@@ -1,0 +1,16 @@
+@baseUrl = https://acme.example.azure-api.net
+@subscriptionKey = acme-standard-primary-key
+
+### List catalog items
+GET {{baseUrl}}/catalog/items
+Ocp-Apim-Subscription-Key: {{subscriptionKey}}
+
+### Create catalog item
+POST {{baseUrl}}/catalog/items
+Ocp-Apim-Subscription-Key: {{subscriptionKey}}
+Content-Type: application/json
+
+{
+  "sku": "ACME-100",
+  "name": "Sprocket"
+}

@@ -1,0 +1,11 @@
+<case name="check-header rejects a request missing the required header">
+  <policies>
+    <inbound>
+      <check-header name="X-Key" failed-check-httpcode="401">
+        <value>secret</value>
+      </check-header>
+    </inbound>
+  </policies>
+  <request method="GET" path="/catalog/items" />
+  <expect status="401" />
+</case>

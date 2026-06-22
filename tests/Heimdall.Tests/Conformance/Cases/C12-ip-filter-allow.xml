@@ -1,0 +1,11 @@
+<case name="ip-filter allow blocks an unlisted client with 403">
+  <policies>
+    <inbound>
+      <ip-filter action="allow">
+        <address>10.0.0.1</address>
+      </ip-filter>
+    </inbound>
+  </policies>
+  <request method="GET" path="/catalog/items" />
+  <expect status="403" />
+</case>

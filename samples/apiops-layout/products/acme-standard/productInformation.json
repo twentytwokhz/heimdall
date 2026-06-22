@@ -1,0 +1,6 @@
+{
+  "properties": {
+    "displayName": "Acme Standard",
+    "subscriptionRequired": true
+  }
+}

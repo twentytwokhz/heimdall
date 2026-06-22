@@ -1,0 +1,14 @@
+<case name="outbound set-header adds a header to the response">
+  <policies>
+    <outbound>
+      <set-header name="X-Gateway">
+        <value>heimdall</value>
+      </set-header>
+    </outbound>
+  </policies>
+  <backend status="200" body="ok" />
+  <request method="GET" path="/catalog/items" />
+  <expect status="200">
+    <header name="X-Gateway" contains="heimdall" />
+  </expect>
+</case>
