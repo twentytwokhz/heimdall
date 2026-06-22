@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # Browserless. Runs on every push and PR. The Playwright UI E2E specs are
+  # gated OFF by the [E2eFact] attribute (HEIMDALL_E2E unset), so they Skip here.
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - run: dotnet test tests/Heimdall.Tests/Heimdall.Tests.csproj --configuration Debug
+
+  # The single end-to-end regression net: SPA build + real Kestrel host + headless
+  # Chromium. PR-only (it is the slow, browser-dependent job).
+  e2e:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: src/Heimdall.Ui/package-lock.json
+
+      # Emit src/Heimdall.Api/wwwroot/console (vite outDir) so the host serves the SPA.
+      - name: Build console SPA
+        working-directory: src/Heimdall.Ui
+        run: |
+          npm ci
+          npm run build
+
+      # Build the test project first so playwright.ps1 is emitted before browser install.
+      - name: Build tests
+        run: dotnet build tests/Heimdall.Tests/Heimdall.Tests.csproj --configuration Debug
+
+      # Cache the browser binaries. Bump the key when Microsoft.Playwright changes
+      # in Directory.Packages.props (currently 1.60.0).
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ms-playwright-1.60.0-${{ runner.os }}
+
+      - name: Install Chromium
+        run: pwsh tests/Heimdall.Tests/bin/Debug/net10.0/playwright.ps1 install --with-deps chromium
+
+      - name: Run UI E2E suite
+        env:
+          HEIMDALL_E2E: '1'
+        run: dotnet test tests/Heimdall.Tests/Heimdall.Tests.csproj --configuration Debug --no-build
