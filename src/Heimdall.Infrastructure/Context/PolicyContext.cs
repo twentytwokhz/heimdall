@@ -11,6 +11,7 @@ public sealed class PolicyContext : IPolicyContext
     public required EmuRequest Request { get; init; }
     public EmuResponse Response { get; init; } = new();
     public IDictionary<string, object?> Variables { get; init; } = new Dictionary<string, object?>();
+    public IReadOnlyDictionary<string, Uri> Backends { get; init; } = new Dictionary<string, Uri>();
     public Guid RequestId { get; init; } = Guid.NewGuid();
     public DateTimeOffset Timestamp { get; init; } = DateTimeOffset.UtcNow;
     public required ApiInfo Api { get; init; }
