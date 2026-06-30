@@ -1,3 +1,4 @@
+using Heimdall.Api.Configuration;
 using Heimdall.Api.Playground;
 using Heimdall.Api.Routing;
 using Heimdall.Application;
@@ -11,7 +12,8 @@ namespace Heimdall.Api.Pipeline;
 /// builds the context from the incoming request, and writes the final context.Response back to the
 /// client after the pipeline has run.
 /// </summary>
-public sealed class HttpContextPolicyContextFactory(IExpressionEvaluator expressions, INamedValues namedValues, IClock clock)
+public sealed class HttpContextPolicyContextFactory(
+    IExpressionEvaluator expressions, INamedValues namedValues, IClock clock, GatewayConfigHolder config)
 {
     public async Task<IPolicyContext> CreateAsync(
         HttpContext http,
@@ -41,6 +43,8 @@ public sealed class HttpContextPolicyContextFactory(IExpressionEvaluator express
                 Body = new HttpEmuBody(body),
                 IpAddress = http.Connection.RemoteIpAddress?.ToString(),
             },
+            // Named backends (post-override) so set-backend-service backend-id can resolve them.
+            Backends = config.Current.Backends.ToDictionary(b => b.Id, b => b.Url),
             Api = new ApiInfo(match.Api.Id, match.Api.DisplayName, match.Api.Path),
             Operation = new OperationInfo(match.Operation.Id, match.Operation.Method, match.Operation.UriTemplate),
             Subscription = subscription,

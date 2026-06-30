@@ -11,6 +11,10 @@ public interface IPolicyContext
     EmuResponse Response { get; }
     IDictionary<string, object?> Variables { get; }
 
+    /// <summary><c>set-backend-service backend-id</c>: named backend entities by id (URLs reflect any
+    /// per-environment backend overrides). Empty when the config declares no backends.</summary>
+    IReadOnlyDictionary<string, Uri> Backends { get; }
+
     /// <summary><c>context.RequestId</c>: a unique id assigned to this request.</summary>
     Guid RequestId { get; }
 
