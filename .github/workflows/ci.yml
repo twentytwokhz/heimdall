@@ -52,7 +52,7 @@ jobs:
       # Cache the browser binaries. Bump the key when Microsoft.Playwright changes
       # in Directory.Packages.props (currently 1.60.0).
       - name: Cache Playwright browsers
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: ms-playwright-1.60.0-${{ runner.os }}
