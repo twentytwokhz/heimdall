@@ -29,5 +29,6 @@ internal static class ScriptOptionsFactory
                 "System.Text",
                 "System.Net",
                 "Newtonsoft.Json",
-                "Newtonsoft.Json.Linq");
+                "Newtonsoft.Json.Linq",
+                "Heimdall.Infrastructure.Expressions");   // APIM-parity context.Variables.GetValueOrDefault<T>
 }
